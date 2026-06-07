@@ -1,0 +1,24 @@
+csa-rolling/
+examples/
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+/*.bin
+/*.lst
+/*.trace
+/tmp_*_input.json
+README_FULL_RU.md
+/docs/schemes/*.tikz
+docs/schemes/.$controlunit.drawio.bkp
+docs/schemes/.$datapath.drawio.bkp
+docs/schemes/backup-before-detailed-20260605-2229/_oldcu.drawio
+docs/schemes/backup-before-detailed-20260605-2229/.$controlunit - Copy.drawio.bkp
+docs/schemes/backup-before-detailed-20260605-2229/.$controlunit.drawio.bkp
+docs/schemes/backup-before-detailed-20260605-2229/.$datapath.drawio.bkp
+docs/schemes/backup-before-detailed-20260605-2229/controlunit.drawio
+docs/schemes/backup-before-detailed-20260605-2229/controlunit.pdf
+docs/schemes/backup-before-detailed-20260605-2229/controlunit.png
+docs/schemes/backup-before-detailed-20260605-2229/datapath.drawio
+docs/schemes/backup-before-detailed-20260605-2229/datapath.pdf
+docs/schemes/backup-before-detailed-20260605-2229/datapath.png

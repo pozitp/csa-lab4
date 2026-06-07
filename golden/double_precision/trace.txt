@@ -1,0 +1,691 @@
+000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: ld 6
+000002 | addr  | pc=0001 acc=0           z=0 n=0 irq=0 | data address <- 6
+000003 | mem   | pc=0001 acc=999999999   z=0 n=0 irq=0 | acc <- mem[6]
+000004 | fetch | pc=0002 acc=999999999   z=0 n=0 irq=0 | 0001: add 8
+000005 | mem   | pc=0002 acc=999999999   z=0 n=0 irq=0 | operand <- mem[8]
+000006 | exec  | pc=0002 acc=1000000001  z=0 n=0 irq=0 | acc += mem[8]
+000007 | fetch | pc=0003 acc=1000000001  z=0 n=0 irq=0 | 0002: st 10
+000008 | addr  | pc=0003 acc=1000000001  z=0 n=0 irq=0 | data address <- 10
+000009 | mem   | pc=0003 acc=1000000001  z=0 n=0 irq=0 | mem[10] <- acc
+000010 | fetch | pc=0004 acc=1000000001  z=0 n=0 irq=0 | 0003: cmp 4
+000011 | mem   | pc=0004 acc=1000000001  z=0 n=0 irq=0 | operand <- mem[4]
+000012 | exec  | pc=0004 acc=1000000001  z=0 n=0 irq=0 | cmp acc, mem[4]
+000013 | fetch | pc=0005 acc=1000000001  z=0 n=0 irq=0 | 0004: jl 9
+000014 | exec  | pc=0005 acc=1000000001  z=0 n=0 irq=0 | jl skip
+000015 | fetch | pc=0006 acc=1000000001  z=0 n=0 irq=0 | 0005: sub 4
+000016 | mem   | pc=0006 acc=1000000001  z=0 n=0 irq=0 | operand <- mem[4]
+000017 | exec  | pc=0006 acc=1           z=0 n=0 irq=0 | acc -= mem[4]
+000018 | fetch | pc=0007 acc=1           z=0 n=0 irq=0 | 0006: st 10
+000019 | addr  | pc=0007 acc=1           z=0 n=0 irq=0 | data address <- 10
+000020 | mem   | pc=0007 acc=1           z=0 n=0 irq=0 | mem[10] <- acc
+000021 | fetch | pc=0008 acc=1           z=0 n=0 irq=0 | 0007: ld 0
+000022 | addr  | pc=0008 acc=1           z=0 n=0 irq=0 | data address <- 0
+000023 | mem   | pc=0008 acc=1           z=0 n=0 irq=0 | acc <- mem[0]
+000024 | fetch | pc=0009 acc=1           z=0 n=0 irq=0 | 0008: st 11
+000025 | addr  | pc=0009 acc=1           z=0 n=0 irq=0 | data address <- 11
+000026 | mem   | pc=0009 acc=1           z=0 n=0 irq=0 | mem[11] <- acc
+000027 | fetch | pc=0010 acc=1           z=0 n=0 irq=0 | 0009: ld 5
+000028 | addr  | pc=0010 acc=1           z=0 n=0 irq=0 | data address <- 5
+000029 | mem   | pc=0010 acc=123         z=0 n=0 irq=0 | acc <- mem[5]
+000030 | fetch | pc=0011 acc=123         z=0 n=0 irq=0 | 0010: add 7
+000031 | mem   | pc=0011 acc=123         z=0 n=0 irq=0 | operand <- mem[7]
+000032 | exec  | pc=0011 acc=912         z=0 n=0 irq=0 | acc += mem[7]
+000033 | fetch | pc=0012 acc=912         z=0 n=0 irq=0 | 0011: add 11
+000034 | mem   | pc=0012 acc=912         z=0 n=0 irq=0 | operand <- mem[11]
+000035 | exec  | pc=0012 acc=913         z=0 n=0 irq=0 | acc += mem[11]
+000036 | fetch | pc=0013 acc=913         z=0 n=0 irq=0 | 0012: st 9
+000037 | addr  | pc=0013 acc=913         z=0 n=0 irq=0 | data address <- 9
+000038 | mem   | pc=0013 acc=913         z=0 n=0 irq=0 | mem[9] <- acc
+000039 | fetch | pc=0014 acc=913         z=0 n=0 irq=0 | 0013: ld 9
+000040 | addr  | pc=0014 acc=913         z=0 n=0 irq=0 | data address <- 9
+000041 | mem   | pc=0014 acc=913         z=0 n=0 irq=0 | acc <- mem[9]
+000042 | fetch | pc=0015 acc=913         z=0 n=0 irq=0 | 0014: call 20
+000043 | exec  | pc=0020 acc=913         z=0 n=0 irq=0 | call 20
+000044 | fetch | pc=0021 acc=913         z=0 n=0 irq=0 | 0020: st 12
+000045 | addr  | pc=0021 acc=913         z=0 n=0 irq=0 | data address <- 12
+000046 | mem   | pc=0021 acc=913         z=0 n=0 irq=0 | mem[12] <- acc
+000047 | fetch | pc=0022 acc=913         z=0 n=0 irq=0 | 0021: ldi 0
+000048 | exec  | pc=0022 acc=0           z=1 n=0 irq=0 | acc <- 0
+000049 | fetch | pc=0023 acc=0           z=1 n=0 irq=0 | 0022: st 13
+000050 | addr  | pc=0023 acc=0           z=1 n=0 irq=0 | data address <- 13
+000051 | mem   | pc=0023 acc=0           z=1 n=0 irq=0 | mem[13] <- acc
+000052 | fetch | pc=0024 acc=0           z=1 n=0 irq=0 | 0023: lea 15
+000053 | exec  | pc=0024 acc=15          z=0 n=0 irq=0 | acc <- address 15
+000054 | fetch | pc=0025 acc=15          z=0 n=0 irq=0 | 0024: st 14
+000055 | addr  | pc=0025 acc=15          z=0 n=0 irq=0 | data address <- 14
+000056 | mem   | pc=0025 acc=15          z=0 n=0 irq=0 | mem[14] <- acc
+000057 | fetch | pc=0026 acc=15          z=0 n=0 irq=0 | 0025: ld 12
+000058 | addr  | pc=0026 acc=15          z=0 n=0 irq=0 | data address <- 12
+000059 | mem   | pc=0026 acc=913         z=0 n=0 irq=0 | acc <- mem[12]
+000060 | fetch | pc=0027 acc=913         z=0 n=0 irq=0 | 0026: jnz 30
+000061 | exec  | pc=0030 acc=913         z=0 n=0 irq=0 | jnz taken
+000062 | fetch | pc=0031 acc=913         z=0 n=0 irq=0 | 0030: ld 12
+000063 | addr  | pc=0031 acc=913         z=0 n=0 irq=0 | data address <- 12
+000064 | mem   | pc=0031 acc=913         z=0 n=0 irq=0 | acc <- mem[12]
+000065 | fetch | pc=0032 acc=913         z=0 n=0 irq=0 | 0031: jz 45
+000066 | exec  | pc=0032 acc=913         z=0 n=0 irq=0 | jz skip
+000067 | fetch | pc=0033 acc=913         z=0 n=0 irq=0 | 0032: mod 1
+000068 | mem   | pc=0033 acc=913         z=0 n=0 irq=0 | operand <- mem[1]
+000069 | exec  | pc=0033 acc=913         z=0 n=0 irq=0 | mod operands ready
+000070 | alu   | pc=0033 acc=3           z=0 n=0 irq=0 | acc %= mem[1]
+000071 | fetch | pc=0034 acc=3           z=0 n=0 irq=0 | 0033: add 3
+000072 | mem   | pc=0034 acc=3           z=0 n=0 irq=0 | operand <- mem[3]
+000073 | exec  | pc=0034 acc=51          z=0 n=0 irq=0 | acc += mem[3]
+000074 | fetch | pc=0035 acc=51          z=0 n=0 irq=0 | 0034: stx 14
+000075 | addr  | pc=0035 acc=51          z=0 n=0 irq=0 | ptr address <- 14
+000076 | mem   | pc=0035 acc=51          z=0 n=0 irq=0 | address <- mem[14]
+000077 | mem   | pc=0035 acc=51          z=0 n=0 irq=0 | mem[15] <- acc
+000078 | fetch | pc=0036 acc=51          z=0 n=0 irq=0 | 0035: ld 14
+000079 | addr  | pc=0036 acc=51          z=0 n=0 irq=0 | data address <- 14
+000080 | mem   | pc=0036 acc=15          z=0 n=0 irq=0 | acc <- mem[14]
+000081 | fetch | pc=0037 acc=15          z=0 n=0 irq=0 | 0036: add 0
+000082 | mem   | pc=0037 acc=15          z=0 n=0 irq=0 | operand <- mem[0]
+000083 | exec  | pc=0037 acc=16          z=0 n=0 irq=0 | acc += mem[0]
+000084 | fetch | pc=0038 acc=16          z=0 n=0 irq=0 | 0037: st 14
+000085 | addr  | pc=0038 acc=16          z=0 n=0 irq=0 | data address <- 14
+000086 | mem   | pc=0038 acc=16          z=0 n=0 irq=0 | mem[14] <- acc
+000087 | fetch | pc=0039 acc=16          z=0 n=0 irq=0 | 0038: ld 13
+000088 | addr  | pc=0039 acc=16          z=0 n=0 irq=0 | data address <- 13
+000089 | mem   | pc=0039 acc=0           z=1 n=0 irq=0 | acc <- mem[13]
+000090 | fetch | pc=0040 acc=0           z=1 n=0 irq=0 | 0039: add 0
+000091 | mem   | pc=0040 acc=0           z=1 n=0 irq=0 | operand <- mem[0]
+000092 | exec  | pc=0040 acc=1           z=0 n=0 irq=0 | acc += mem[0]
+000093 | fetch | pc=0041 acc=1           z=0 n=0 irq=0 | 0040: st 13
+000094 | addr  | pc=0041 acc=1           z=0 n=0 irq=0 | data address <- 13
+000095 | mem   | pc=0041 acc=1           z=0 n=0 irq=0 | mem[13] <- acc
+000096 | fetch | pc=0042 acc=1           z=0 n=0 irq=0 | 0041: ld 12
+000097 | addr  | pc=0042 acc=1           z=0 n=0 irq=0 | data address <- 12
+000098 | mem   | pc=0042 acc=913         z=0 n=0 irq=0 | acc <- mem[12]
+000099 | fetch | pc=0043 acc=913         z=0 n=0 irq=0 | 0042: div 1
+000100 | mem   | pc=0043 acc=913         z=0 n=0 irq=0 | operand <- mem[1]
+000101 | exec  | pc=0043 acc=913         z=0 n=0 irq=0 | div operands ready
+000102 | alu   | pc=0043 acc=91          z=0 n=0 irq=0 | acc /= mem[1]
+000103 | fetch | pc=0044 acc=91          z=0 n=0 irq=0 | 0043: st 12
+000104 | addr  | pc=0044 acc=91          z=0 n=0 irq=0 | data address <- 12
+000105 | mem   | pc=0044 acc=91          z=0 n=0 irq=0 | mem[12] <- acc
+000106 | fetch | pc=0045 acc=91          z=0 n=0 irq=0 | 0044: jmp 30
+000107 | exec  | pc=0030 acc=91          z=0 n=0 irq=0 | pc <- 30
+000108 | fetch | pc=0031 acc=91          z=0 n=0 irq=0 | 0030: ld 12
+000109 | addr  | pc=0031 acc=91          z=0 n=0 irq=0 | data address <- 12
+000110 | mem   | pc=0031 acc=91          z=0 n=0 irq=0 | acc <- mem[12]
+000111 | fetch | pc=0032 acc=91          z=0 n=0 irq=0 | 0031: jz 45
+000112 | exec  | pc=0032 acc=91          z=0 n=0 irq=0 | jz skip
+000113 | fetch | pc=0033 acc=91          z=0 n=0 irq=0 | 0032: mod 1
+000114 | mem   | pc=0033 acc=91          z=0 n=0 irq=0 | operand <- mem[1]
+000115 | exec  | pc=0033 acc=91          z=0 n=0 irq=0 | mod operands ready
+000116 | alu   | pc=0033 acc=1           z=0 n=0 irq=0 | acc %= mem[1]
+000117 | fetch | pc=0034 acc=1           z=0 n=0 irq=0 | 0033: add 3
+000118 | mem   | pc=0034 acc=1           z=0 n=0 irq=0 | operand <- mem[3]
+000119 | exec  | pc=0034 acc=49          z=0 n=0 irq=0 | acc += mem[3]
+000120 | fetch | pc=0035 acc=49          z=0 n=0 irq=0 | 0034: stx 14
+000121 | addr  | pc=0035 acc=49          z=0 n=0 irq=0 | ptr address <- 14
+000122 | mem   | pc=0035 acc=49          z=0 n=0 irq=0 | address <- mem[14]
+000123 | mem   | pc=0035 acc=49          z=0 n=0 irq=0 | mem[16] <- acc
+000124 | fetch | pc=0036 acc=49          z=0 n=0 irq=0 | 0035: ld 14
+000125 | addr  | pc=0036 acc=49          z=0 n=0 irq=0 | data address <- 14
+000126 | mem   | pc=0036 acc=16          z=0 n=0 irq=0 | acc <- mem[14]
+000127 | fetch | pc=0037 acc=16          z=0 n=0 irq=0 | 0036: add 0
+000128 | mem   | pc=0037 acc=16          z=0 n=0 irq=0 | operand <- mem[0]
+000129 | exec  | pc=0037 acc=17          z=0 n=0 irq=0 | acc += mem[0]
+000130 | fetch | pc=0038 acc=17          z=0 n=0 irq=0 | 0037: st 14
+000131 | addr  | pc=0038 acc=17          z=0 n=0 irq=0 | data address <- 14
+000132 | mem   | pc=0038 acc=17          z=0 n=0 irq=0 | mem[14] <- acc
+000133 | fetch | pc=0039 acc=17          z=0 n=0 irq=0 | 0038: ld 13
+000134 | addr  | pc=0039 acc=17          z=0 n=0 irq=0 | data address <- 13
+000135 | mem   | pc=0039 acc=1           z=0 n=0 irq=0 | acc <- mem[13]
+000136 | fetch | pc=0040 acc=1           z=0 n=0 irq=0 | 0039: add 0
+000137 | mem   | pc=0040 acc=1           z=0 n=0 irq=0 | operand <- mem[0]
+000138 | exec  | pc=0040 acc=2           z=0 n=0 irq=0 | acc += mem[0]
+000139 | fetch | pc=0041 acc=2           z=0 n=0 irq=0 | 0040: st 13
+000140 | addr  | pc=0041 acc=2           z=0 n=0 irq=0 | data address <- 13
+000141 | mem   | pc=0041 acc=2           z=0 n=0 irq=0 | mem[13] <- acc
+000142 | fetch | pc=0042 acc=2           z=0 n=0 irq=0 | 0041: ld 12
+000143 | addr  | pc=0042 acc=2           z=0 n=0 irq=0 | data address <- 12
+000144 | mem   | pc=0042 acc=91          z=0 n=0 irq=0 | acc <- mem[12]
+000145 | fetch | pc=0043 acc=91          z=0 n=0 irq=0 | 0042: div 1
+000146 | mem   | pc=0043 acc=91          z=0 n=0 irq=0 | operand <- mem[1]
+000147 | exec  | pc=0043 acc=91          z=0 n=0 irq=0 | div operands ready
+000148 | alu   | pc=0043 acc=9           z=0 n=0 irq=0 | acc /= mem[1]
+000149 | fetch | pc=0044 acc=9           z=0 n=0 irq=0 | 0043: st 12
+000150 | addr  | pc=0044 acc=9           z=0 n=0 irq=0 | data address <- 12
+000151 | mem   | pc=0044 acc=9           z=0 n=0 irq=0 | mem[12] <- acc
+000152 | fetch | pc=0045 acc=9           z=0 n=0 irq=0 | 0044: jmp 30
+000153 | exec  | pc=0030 acc=9           z=0 n=0 irq=0 | pc <- 30
+000154 | fetch | pc=0031 acc=9           z=0 n=0 irq=0 | 0030: ld 12
+000155 | addr  | pc=0031 acc=9           z=0 n=0 irq=0 | data address <- 12
+000156 | mem   | pc=0031 acc=9           z=0 n=0 irq=0 | acc <- mem[12]
+000157 | fetch | pc=0032 acc=9           z=0 n=0 irq=0 | 0031: jz 45
+000158 | exec  | pc=0032 acc=9           z=0 n=0 irq=0 | jz skip
+000159 | fetch | pc=0033 acc=9           z=0 n=0 irq=0 | 0032: mod 1
+000160 | mem   | pc=0033 acc=9           z=0 n=0 irq=0 | operand <- mem[1]
+000161 | exec  | pc=0033 acc=9           z=0 n=0 irq=0 | mod operands ready
+000162 | alu   | pc=0033 acc=9           z=0 n=0 irq=0 | acc %= mem[1]
+000163 | fetch | pc=0034 acc=9           z=0 n=0 irq=0 | 0033: add 3
+000164 | mem   | pc=0034 acc=9           z=0 n=0 irq=0 | operand <- mem[3]
+000165 | exec  | pc=0034 acc=57          z=0 n=0 irq=0 | acc += mem[3]
+000166 | fetch | pc=0035 acc=57          z=0 n=0 irq=0 | 0034: stx 14
+000167 | addr  | pc=0035 acc=57          z=0 n=0 irq=0 | ptr address <- 14
+000168 | mem   | pc=0035 acc=57          z=0 n=0 irq=0 | address <- mem[14]
+000169 | mem   | pc=0035 acc=57          z=0 n=0 irq=0 | mem[17] <- acc
+000170 | fetch | pc=0036 acc=57          z=0 n=0 irq=0 | 0035: ld 14
+000171 | addr  | pc=0036 acc=57          z=0 n=0 irq=0 | data address <- 14
+000172 | mem   | pc=0036 acc=17          z=0 n=0 irq=0 | acc <- mem[14]
+000173 | fetch | pc=0037 acc=17          z=0 n=0 irq=0 | 0036: add 0
+000174 | mem   | pc=0037 acc=17          z=0 n=0 irq=0 | operand <- mem[0]
+000175 | exec  | pc=0037 acc=18          z=0 n=0 irq=0 | acc += mem[0]
+000176 | fetch | pc=0038 acc=18          z=0 n=0 irq=0 | 0037: st 14
+000177 | addr  | pc=0038 acc=18          z=0 n=0 irq=0 | data address <- 14
+000178 | mem   | pc=0038 acc=18          z=0 n=0 irq=0 | mem[14] <- acc
+000179 | fetch | pc=0039 acc=18          z=0 n=0 irq=0 | 0038: ld 13
+000180 | addr  | pc=0039 acc=18          z=0 n=0 irq=0 | data address <- 13
+000181 | mem   | pc=0039 acc=2           z=0 n=0 irq=0 | acc <- mem[13]
+000182 | fetch | pc=0040 acc=2           z=0 n=0 irq=0 | 0039: add 0
+000183 | mem   | pc=0040 acc=2           z=0 n=0 irq=0 | operand <- mem[0]
+000184 | exec  | pc=0040 acc=3           z=0 n=0 irq=0 | acc += mem[0]
+000185 | fetch | pc=0041 acc=3           z=0 n=0 irq=0 | 0040: st 13
+000186 | addr  | pc=0041 acc=3           z=0 n=0 irq=0 | data address <- 13
+000187 | mem   | pc=0041 acc=3           z=0 n=0 irq=0 | mem[13] <- acc
+000188 | fetch | pc=0042 acc=3           z=0 n=0 irq=0 | 0041: ld 12
+000189 | addr  | pc=0042 acc=3           z=0 n=0 irq=0 | data address <- 12
+000190 | mem   | pc=0042 acc=9           z=0 n=0 irq=0 | acc <- mem[12]
+000191 | fetch | pc=0043 acc=9           z=0 n=0 irq=0 | 0042: div 1
+000192 | mem   | pc=0043 acc=9           z=0 n=0 irq=0 | operand <- mem[1]
+000193 | exec  | pc=0043 acc=9           z=0 n=0 irq=0 | div operands ready
+000194 | alu   | pc=0043 acc=0           z=1 n=0 irq=0 | acc /= mem[1]
+000195 | fetch | pc=0044 acc=0           z=1 n=0 irq=0 | 0043: st 12
+000196 | addr  | pc=0044 acc=0           z=1 n=0 irq=0 | data address <- 12
+000197 | mem   | pc=0044 acc=0           z=1 n=0 irq=0 | mem[12] <- acc
+000198 | fetch | pc=0045 acc=0           z=1 n=0 irq=0 | 0044: jmp 30
+000199 | exec  | pc=0030 acc=0           z=1 n=0 irq=0 | pc <- 30
+000200 | fetch | pc=0031 acc=0           z=1 n=0 irq=0 | 0030: ld 12
+000201 | addr  | pc=0031 acc=0           z=1 n=0 irq=0 | data address <- 12
+000202 | mem   | pc=0031 acc=0           z=1 n=0 irq=0 | acc <- mem[12]
+000203 | fetch | pc=0032 acc=0           z=1 n=0 irq=0 | 0031: jz 45
+000204 | exec  | pc=0045 acc=0           z=1 n=0 irq=0 | jz taken
+000205 | fetch | pc=0046 acc=0           z=1 n=0 irq=0 | 0045: ld 13
+000206 | addr  | pc=0046 acc=0           z=1 n=0 irq=0 | data address <- 13
+000207 | mem   | pc=0046 acc=3           z=0 n=0 irq=0 | acc <- mem[13]
+000208 | fetch | pc=0047 acc=3           z=0 n=0 irq=0 | 0046: jz 56
+000209 | exec  | pc=0047 acc=3           z=0 n=0 irq=0 | jz skip
+000210 | fetch | pc=0048 acc=3           z=0 n=0 irq=0 | 0047: ld 14
+000211 | addr  | pc=0048 acc=3           z=0 n=0 irq=0 | data address <- 14
+000212 | mem   | pc=0048 acc=18          z=0 n=0 irq=0 | acc <- mem[14]
+000213 | fetch | pc=0049 acc=18          z=0 n=0 irq=0 | 0048: sub 0
+000214 | mem   | pc=0049 acc=18          z=0 n=0 irq=0 | operand <- mem[0]
+000215 | exec  | pc=0049 acc=17          z=0 n=0 irq=0 | acc -= mem[0]
+000216 | fetch | pc=0050 acc=17          z=0 n=0 irq=0 | 0049: st 14
+000217 | addr  | pc=0050 acc=17          z=0 n=0 irq=0 | data address <- 14
+000218 | mem   | pc=0050 acc=17          z=0 n=0 irq=0 | mem[14] <- acc
+000219 | fetch | pc=0051 acc=17          z=0 n=0 irq=0 | 0050: ldx 14
+000220 | addr  | pc=0051 acc=17          z=0 n=0 irq=0 | ptr address <- 14
+000221 | mem   | pc=0051 acc=17          z=0 n=0 irq=0 | address <- mem[14]
+000222 | mem   | pc=0051 acc=57          z=0 n=0 irq=0 | acc <- mem[17]
+000223 | fetch | pc=0052 acc=57          z=0 n=0 irq=0 | 0051: st 65281
+000224 | addr  | pc=0052 acc=57          z=0 n=0 irq=0 | data address <- 65281
+000225 | mem   | pc=0052 acc=57          z=0 n=0 irq=0 | mem[65281] <- acc
+000226 | fetch | pc=0053 acc=57          z=0 n=0 irq=0 | 0052: ld 13
+000227 | addr  | pc=0053 acc=57          z=0 n=0 irq=0 | data address <- 13
+000228 | mem   | pc=0053 acc=3           z=0 n=0 irq=0 | acc <- mem[13]
+000229 | fetch | pc=0054 acc=3           z=0 n=0 irq=0 | 0053: sub 0
+000230 | mem   | pc=0054 acc=3           z=0 n=0 irq=0 | operand <- mem[0]
+000231 | exec  | pc=0054 acc=2           z=0 n=0 irq=0 | acc -= mem[0]
+000232 | fetch | pc=0055 acc=2           z=0 n=0 irq=0 | 0054: st 13
+000233 | addr  | pc=0055 acc=2           z=0 n=0 irq=0 | data address <- 13
+000234 | mem   | pc=0055 acc=2           z=0 n=0 irq=0 | mem[13] <- acc
+000235 | fetch | pc=0056 acc=2           z=0 n=0 irq=0 | 0055: jmp 45
+000236 | exec  | pc=0045 acc=2           z=0 n=0 irq=0 | pc <- 45
+000237 | fetch | pc=0046 acc=2           z=0 n=0 irq=0 | 0045: ld 13
+000238 | addr  | pc=0046 acc=2           z=0 n=0 irq=0 | data address <- 13
+000239 | mem   | pc=0046 acc=2           z=0 n=0 irq=0 | acc <- mem[13]
+000240 | fetch | pc=0047 acc=2           z=0 n=0 irq=0 | 0046: jz 56
+000241 | exec  | pc=0047 acc=2           z=0 n=0 irq=0 | jz skip
+000242 | fetch | pc=0048 acc=2           z=0 n=0 irq=0 | 0047: ld 14
+000243 | addr  | pc=0048 acc=2           z=0 n=0 irq=0 | data address <- 14
+000244 | mem   | pc=0048 acc=17          z=0 n=0 irq=0 | acc <- mem[14]
+000245 | fetch | pc=0049 acc=17          z=0 n=0 irq=0 | 0048: sub 0
+000246 | mem   | pc=0049 acc=17          z=0 n=0 irq=0 | operand <- mem[0]
+000247 | exec  | pc=0049 acc=16          z=0 n=0 irq=0 | acc -= mem[0]
+000248 | fetch | pc=0050 acc=16          z=0 n=0 irq=0 | 0049: st 14
+000249 | addr  | pc=0050 acc=16          z=0 n=0 irq=0 | data address <- 14
+000250 | mem   | pc=0050 acc=16          z=0 n=0 irq=0 | mem[14] <- acc
+000251 | fetch | pc=0051 acc=16          z=0 n=0 irq=0 | 0050: ldx 14
+000252 | addr  | pc=0051 acc=16          z=0 n=0 irq=0 | ptr address <- 14
+000253 | mem   | pc=0051 acc=16          z=0 n=0 irq=0 | address <- mem[14]
+000254 | mem   | pc=0051 acc=49          z=0 n=0 irq=0 | acc <- mem[16]
+000255 | fetch | pc=0052 acc=49          z=0 n=0 irq=0 | 0051: st 65281
+000256 | addr  | pc=0052 acc=49          z=0 n=0 irq=0 | data address <- 65281
+000257 | mem   | pc=0052 acc=49          z=0 n=0 irq=0 | mem[65281] <- acc
+000258 | fetch | pc=0053 acc=49          z=0 n=0 irq=0 | 0052: ld 13
+000259 | addr  | pc=0053 acc=49          z=0 n=0 irq=0 | data address <- 13
+000260 | mem   | pc=0053 acc=2           z=0 n=0 irq=0 | acc <- mem[13]
+000261 | fetch | pc=0054 acc=2           z=0 n=0 irq=0 | 0053: sub 0
+000262 | mem   | pc=0054 acc=2           z=0 n=0 irq=0 | operand <- mem[0]
+000263 | exec  | pc=0054 acc=1           z=0 n=0 irq=0 | acc -= mem[0]
+000264 | fetch | pc=0055 acc=1           z=0 n=0 irq=0 | 0054: st 13
+000265 | addr  | pc=0055 acc=1           z=0 n=0 irq=0 | data address <- 13
+000266 | mem   | pc=0055 acc=1           z=0 n=0 irq=0 | mem[13] <- acc
+000267 | fetch | pc=0056 acc=1           z=0 n=0 irq=0 | 0055: jmp 45
+000268 | exec  | pc=0045 acc=1           z=0 n=0 irq=0 | pc <- 45
+000269 | fetch | pc=0046 acc=1           z=0 n=0 irq=0 | 0045: ld 13
+000270 | addr  | pc=0046 acc=1           z=0 n=0 irq=0 | data address <- 13
+000271 | mem   | pc=0046 acc=1           z=0 n=0 irq=0 | acc <- mem[13]
+000272 | fetch | pc=0047 acc=1           z=0 n=0 irq=0 | 0046: jz 56
+000273 | exec  | pc=0047 acc=1           z=0 n=0 irq=0 | jz skip
+000274 | fetch | pc=0048 acc=1           z=0 n=0 irq=0 | 0047: ld 14
+000275 | addr  | pc=0048 acc=1           z=0 n=0 irq=0 | data address <- 14
+000276 | mem   | pc=0048 acc=16          z=0 n=0 irq=0 | acc <- mem[14]
+000277 | fetch | pc=0049 acc=16          z=0 n=0 irq=0 | 0048: sub 0
+000278 | mem   | pc=0049 acc=16          z=0 n=0 irq=0 | operand <- mem[0]
+000279 | exec  | pc=0049 acc=15          z=0 n=0 irq=0 | acc -= mem[0]
+000280 | fetch | pc=0050 acc=15          z=0 n=0 irq=0 | 0049: st 14
+000281 | addr  | pc=0050 acc=15          z=0 n=0 irq=0 | data address <- 14
+000282 | mem   | pc=0050 acc=15          z=0 n=0 irq=0 | mem[14] <- acc
+000283 | fetch | pc=0051 acc=15          z=0 n=0 irq=0 | 0050: ldx 14
+000284 | addr  | pc=0051 acc=15          z=0 n=0 irq=0 | ptr address <- 14
+000285 | mem   | pc=0051 acc=15          z=0 n=0 irq=0 | address <- mem[14]
+000286 | mem   | pc=0051 acc=51          z=0 n=0 irq=0 | acc <- mem[15]
+000287 | fetch | pc=0052 acc=51          z=0 n=0 irq=0 | 0051: st 65281
+000288 | addr  | pc=0052 acc=51          z=0 n=0 irq=0 | data address <- 65281
+000289 | mem   | pc=0052 acc=51          z=0 n=0 irq=0 | mem[65281] <- acc
+000290 | fetch | pc=0053 acc=51          z=0 n=0 irq=0 | 0052: ld 13
+000291 | addr  | pc=0053 acc=51          z=0 n=0 irq=0 | data address <- 13
+000292 | mem   | pc=0053 acc=1           z=0 n=0 irq=0 | acc <- mem[13]
+000293 | fetch | pc=0054 acc=1           z=0 n=0 irq=0 | 0053: sub 0
+000294 | mem   | pc=0054 acc=1           z=0 n=0 irq=0 | operand <- mem[0]
+000295 | exec  | pc=0054 acc=0           z=1 n=0 irq=0 | acc -= mem[0]
+000296 | fetch | pc=0055 acc=0           z=1 n=0 irq=0 | 0054: st 13
+000297 | addr  | pc=0055 acc=0           z=1 n=0 irq=0 | data address <- 13
+000298 | mem   | pc=0055 acc=0           z=1 n=0 irq=0 | mem[13] <- acc
+000299 | fetch | pc=0056 acc=0           z=1 n=0 irq=0 | 0055: jmp 45
+000300 | exec  | pc=0045 acc=0           z=1 n=0 irq=0 | pc <- 45
+000301 | fetch | pc=0046 acc=0           z=1 n=0 irq=0 | 0045: ld 13
+000302 | addr  | pc=0046 acc=0           z=1 n=0 irq=0 | data address <- 13
+000303 | mem   | pc=0046 acc=0           z=1 n=0 irq=0 | acc <- mem[13]
+000304 | fetch | pc=0047 acc=0           z=1 n=0 irq=0 | 0046: jz 56
+000305 | exec  | pc=0056 acc=0           z=1 n=0 irq=0 | jz taken
+000306 | fetch | pc=0057 acc=0           z=1 n=0 irq=0 | 0056: ret 0
+000307 | exec  | pc=0015 acc=0           z=1 n=0 irq=0 | ret
+000308 | fetch | pc=0016 acc=0           z=1 n=0 irq=0 | 0015: ld 10
+000309 | addr  | pc=0016 acc=0           z=1 n=0 irq=0 | data address <- 10
+000310 | mem   | pc=0016 acc=1           z=0 n=0 irq=0 | acc <- mem[10]
+000311 | fetch | pc=0017 acc=1           z=0 n=0 irq=0 | 0016: call 57
+000312 | exec  | pc=0057 acc=1           z=0 n=0 irq=0 | call 57
+000313 | fetch | pc=0058 acc=1           z=0 n=0 irq=0 | 0057: st 31
+000314 | addr  | pc=0058 acc=1           z=0 n=0 irq=0 | data address <- 31
+000315 | mem   | pc=0058 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000316 | fetch | pc=0059 acc=1           z=0 n=0 irq=0 | 0058: ld 32
+000317 | addr  | pc=0059 acc=1           z=0 n=0 irq=0 | data address <- 32
+000318 | mem   | pc=0059 acc=100000000   z=0 n=0 irq=0 | acc <- mem[32]
+000319 | fetch | pc=0060 acc=100000000   z=0 n=0 irq=0 | 0059: jz 71
+000320 | exec  | pc=0060 acc=100000000   z=0 n=0 irq=0 | jz skip
+000321 | fetch | pc=0061 acc=100000000   z=0 n=0 irq=0 | 0060: ld 31
+000322 | addr  | pc=0061 acc=100000000   z=0 n=0 irq=0 | data address <- 31
+000323 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000324 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000325 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000326 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000327 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000328 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000329 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000330 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000331 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000332 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000333 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000334 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000335 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000336 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000337 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000338 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000339 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000340 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000341 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000342 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000343 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000344 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000345 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000346 | mem   | pc=0068 acc=100000000   z=0 n=0 irq=0 | acc <- mem[32]
+000347 | fetch | pc=0069 acc=100000000   z=0 n=0 irq=0 | 0068: div 1
+000348 | mem   | pc=0069 acc=100000000   z=0 n=0 irq=0 | operand <- mem[1]
+000349 | exec  | pc=0069 acc=100000000   z=0 n=0 irq=0 | div operands ready
+000350 | alu   | pc=0069 acc=10000000    z=0 n=0 irq=0 | acc /= mem[1]
+000351 | fetch | pc=0070 acc=10000000    z=0 n=0 irq=0 | 0069: st 32
+000352 | addr  | pc=0070 acc=10000000    z=0 n=0 irq=0 | data address <- 32
+000353 | mem   | pc=0070 acc=10000000    z=0 n=0 irq=0 | mem[32] <- acc
+000354 | fetch | pc=0071 acc=10000000    z=0 n=0 irq=0 | 0070: jmp 58
+000355 | exec  | pc=0058 acc=10000000    z=0 n=0 irq=0 | pc <- 58
+000356 | fetch | pc=0059 acc=10000000    z=0 n=0 irq=0 | 0058: ld 32
+000357 | addr  | pc=0059 acc=10000000    z=0 n=0 irq=0 | data address <- 32
+000358 | mem   | pc=0059 acc=10000000    z=0 n=0 irq=0 | acc <- mem[32]
+000359 | fetch | pc=0060 acc=10000000    z=0 n=0 irq=0 | 0059: jz 71
+000360 | exec  | pc=0060 acc=10000000    z=0 n=0 irq=0 | jz skip
+000361 | fetch | pc=0061 acc=10000000    z=0 n=0 irq=0 | 0060: ld 31
+000362 | addr  | pc=0061 acc=10000000    z=0 n=0 irq=0 | data address <- 31
+000363 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000364 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000365 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000366 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000367 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000368 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000369 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000370 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000371 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000372 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000373 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000374 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000375 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000376 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000377 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000378 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000379 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000380 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000381 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000382 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000383 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000384 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000385 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000386 | mem   | pc=0068 acc=10000000    z=0 n=0 irq=0 | acc <- mem[32]
+000387 | fetch | pc=0069 acc=10000000    z=0 n=0 irq=0 | 0068: div 1
+000388 | mem   | pc=0069 acc=10000000    z=0 n=0 irq=0 | operand <- mem[1]
+000389 | exec  | pc=0069 acc=10000000    z=0 n=0 irq=0 | div operands ready
+000390 | alu   | pc=0069 acc=1000000     z=0 n=0 irq=0 | acc /= mem[1]
+000391 | fetch | pc=0070 acc=1000000     z=0 n=0 irq=0 | 0069: st 32
+000392 | addr  | pc=0070 acc=1000000     z=0 n=0 irq=0 | data address <- 32
+000393 | mem   | pc=0070 acc=1000000     z=0 n=0 irq=0 | mem[32] <- acc
+000394 | fetch | pc=0071 acc=1000000     z=0 n=0 irq=0 | 0070: jmp 58
+000395 | exec  | pc=0058 acc=1000000     z=0 n=0 irq=0 | pc <- 58
+000396 | fetch | pc=0059 acc=1000000     z=0 n=0 irq=0 | 0058: ld 32
+000397 | addr  | pc=0059 acc=1000000     z=0 n=0 irq=0 | data address <- 32
+000398 | mem   | pc=0059 acc=1000000     z=0 n=0 irq=0 | acc <- mem[32]
+000399 | fetch | pc=0060 acc=1000000     z=0 n=0 irq=0 | 0059: jz 71
+000400 | exec  | pc=0060 acc=1000000     z=0 n=0 irq=0 | jz skip
+000401 | fetch | pc=0061 acc=1000000     z=0 n=0 irq=0 | 0060: ld 31
+000402 | addr  | pc=0061 acc=1000000     z=0 n=0 irq=0 | data address <- 31
+000403 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000404 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000405 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000406 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000407 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000408 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000409 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000410 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000411 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000412 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000413 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000414 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000415 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000416 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000417 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000418 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000419 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000420 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000421 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000422 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000423 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000424 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000425 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000426 | mem   | pc=0068 acc=1000000     z=0 n=0 irq=0 | acc <- mem[32]
+000427 | fetch | pc=0069 acc=1000000     z=0 n=0 irq=0 | 0068: div 1
+000428 | mem   | pc=0069 acc=1000000     z=0 n=0 irq=0 | operand <- mem[1]
+000429 | exec  | pc=0069 acc=1000000     z=0 n=0 irq=0 | div operands ready
+000430 | alu   | pc=0069 acc=100000      z=0 n=0 irq=0 | acc /= mem[1]
+000431 | fetch | pc=0070 acc=100000      z=0 n=0 irq=0 | 0069: st 32
+000432 | addr  | pc=0070 acc=100000      z=0 n=0 irq=0 | data address <- 32
+000433 | mem   | pc=0070 acc=100000      z=0 n=0 irq=0 | mem[32] <- acc
+000434 | fetch | pc=0071 acc=100000      z=0 n=0 irq=0 | 0070: jmp 58
+000435 | exec  | pc=0058 acc=100000      z=0 n=0 irq=0 | pc <- 58
+000436 | fetch | pc=0059 acc=100000      z=0 n=0 irq=0 | 0058: ld 32
+000437 | addr  | pc=0059 acc=100000      z=0 n=0 irq=0 | data address <- 32
+000438 | mem   | pc=0059 acc=100000      z=0 n=0 irq=0 | acc <- mem[32]
+000439 | fetch | pc=0060 acc=100000      z=0 n=0 irq=0 | 0059: jz 71
+000440 | exec  | pc=0060 acc=100000      z=0 n=0 irq=0 | jz skip
+000441 | fetch | pc=0061 acc=100000      z=0 n=0 irq=0 | 0060: ld 31
+000442 | addr  | pc=0061 acc=100000      z=0 n=0 irq=0 | data address <- 31
+000443 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000444 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000445 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000446 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000447 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000448 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000449 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000450 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000451 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000452 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000453 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000454 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000455 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000456 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000457 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000458 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000459 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000460 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000461 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000462 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000463 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000464 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000465 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000466 | mem   | pc=0068 acc=100000      z=0 n=0 irq=0 | acc <- mem[32]
+000467 | fetch | pc=0069 acc=100000      z=0 n=0 irq=0 | 0068: div 1
+000468 | mem   | pc=0069 acc=100000      z=0 n=0 irq=0 | operand <- mem[1]
+000469 | exec  | pc=0069 acc=100000      z=0 n=0 irq=0 | div operands ready
+000470 | alu   | pc=0069 acc=10000       z=0 n=0 irq=0 | acc /= mem[1]
+000471 | fetch | pc=0070 acc=10000       z=0 n=0 irq=0 | 0069: st 32
+000472 | addr  | pc=0070 acc=10000       z=0 n=0 irq=0 | data address <- 32
+000473 | mem   | pc=0070 acc=10000       z=0 n=0 irq=0 | mem[32] <- acc
+000474 | fetch | pc=0071 acc=10000       z=0 n=0 irq=0 | 0070: jmp 58
+000475 | exec  | pc=0058 acc=10000       z=0 n=0 irq=0 | pc <- 58
+000476 | fetch | pc=0059 acc=10000       z=0 n=0 irq=0 | 0058: ld 32
+000477 | addr  | pc=0059 acc=10000       z=0 n=0 irq=0 | data address <- 32
+000478 | mem   | pc=0059 acc=10000       z=0 n=0 irq=0 | acc <- mem[32]
+000479 | fetch | pc=0060 acc=10000       z=0 n=0 irq=0 | 0059: jz 71
+000480 | exec  | pc=0060 acc=10000       z=0 n=0 irq=0 | jz skip
+000481 | fetch | pc=0061 acc=10000       z=0 n=0 irq=0 | 0060: ld 31
+000482 | addr  | pc=0061 acc=10000       z=0 n=0 irq=0 | data address <- 31
+000483 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000484 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000485 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000486 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000487 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000488 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000489 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000490 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000491 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000492 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000493 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000494 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000495 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000496 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000497 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000498 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000499 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000500 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000501 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000502 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000503 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000504 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000505 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000506 | mem   | pc=0068 acc=10000       z=0 n=0 irq=0 | acc <- mem[32]
+000507 | fetch | pc=0069 acc=10000       z=0 n=0 irq=0 | 0068: div 1
+000508 | mem   | pc=0069 acc=10000       z=0 n=0 irq=0 | operand <- mem[1]
+000509 | exec  | pc=0069 acc=10000       z=0 n=0 irq=0 | div operands ready
+000510 | alu   | pc=0069 acc=1000        z=0 n=0 irq=0 | acc /= mem[1]
+000511 | fetch | pc=0070 acc=1000        z=0 n=0 irq=0 | 0069: st 32
+000512 | addr  | pc=0070 acc=1000        z=0 n=0 irq=0 | data address <- 32
+000513 | mem   | pc=0070 acc=1000        z=0 n=0 irq=0 | mem[32] <- acc
+000514 | fetch | pc=0071 acc=1000        z=0 n=0 irq=0 | 0070: jmp 58
+000515 | exec  | pc=0058 acc=1000        z=0 n=0 irq=0 | pc <- 58
+000516 | fetch | pc=0059 acc=1000        z=0 n=0 irq=0 | 0058: ld 32
+000517 | addr  | pc=0059 acc=1000        z=0 n=0 irq=0 | data address <- 32
+000518 | mem   | pc=0059 acc=1000        z=0 n=0 irq=0 | acc <- mem[32]
+000519 | fetch | pc=0060 acc=1000        z=0 n=0 irq=0 | 0059: jz 71
+000520 | exec  | pc=0060 acc=1000        z=0 n=0 irq=0 | jz skip
+000521 | fetch | pc=0061 acc=1000        z=0 n=0 irq=0 | 0060: ld 31
+000522 | addr  | pc=0061 acc=1000        z=0 n=0 irq=0 | data address <- 31
+000523 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000524 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000525 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000526 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000527 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000528 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000529 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000530 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000531 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000532 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000533 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000534 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000535 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000536 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000537 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000538 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000539 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000540 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000541 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000542 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000543 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000544 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000545 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000546 | mem   | pc=0068 acc=1000        z=0 n=0 irq=0 | acc <- mem[32]
+000547 | fetch | pc=0069 acc=1000        z=0 n=0 irq=0 | 0068: div 1
+000548 | mem   | pc=0069 acc=1000        z=0 n=0 irq=0 | operand <- mem[1]
+000549 | exec  | pc=0069 acc=1000        z=0 n=0 irq=0 | div operands ready
+000550 | alu   | pc=0069 acc=100         z=0 n=0 irq=0 | acc /= mem[1]
+000551 | fetch | pc=0070 acc=100         z=0 n=0 irq=0 | 0069: st 32
+000552 | addr  | pc=0070 acc=100         z=0 n=0 irq=0 | data address <- 32
+000553 | mem   | pc=0070 acc=100         z=0 n=0 irq=0 | mem[32] <- acc
+000554 | fetch | pc=0071 acc=100         z=0 n=0 irq=0 | 0070: jmp 58
+000555 | exec  | pc=0058 acc=100         z=0 n=0 irq=0 | pc <- 58
+000556 | fetch | pc=0059 acc=100         z=0 n=0 irq=0 | 0058: ld 32
+000557 | addr  | pc=0059 acc=100         z=0 n=0 irq=0 | data address <- 32
+000558 | mem   | pc=0059 acc=100         z=0 n=0 irq=0 | acc <- mem[32]
+000559 | fetch | pc=0060 acc=100         z=0 n=0 irq=0 | 0059: jz 71
+000560 | exec  | pc=0060 acc=100         z=0 n=0 irq=0 | jz skip
+000561 | fetch | pc=0061 acc=100         z=0 n=0 irq=0 | 0060: ld 31
+000562 | addr  | pc=0061 acc=100         z=0 n=0 irq=0 | data address <- 31
+000563 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000564 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000565 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000566 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000567 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000568 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000569 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000570 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000571 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000572 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000573 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000574 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000575 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000576 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000577 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000578 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000579 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000580 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000581 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000582 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000583 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000584 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000585 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000586 | mem   | pc=0068 acc=100         z=0 n=0 irq=0 | acc <- mem[32]
+000587 | fetch | pc=0069 acc=100         z=0 n=0 irq=0 | 0068: div 1
+000588 | mem   | pc=0069 acc=100         z=0 n=0 irq=0 | operand <- mem[1]
+000589 | exec  | pc=0069 acc=100         z=0 n=0 irq=0 | div operands ready
+000590 | alu   | pc=0069 acc=10          z=0 n=0 irq=0 | acc /= mem[1]
+000591 | fetch | pc=0070 acc=10          z=0 n=0 irq=0 | 0069: st 32
+000592 | addr  | pc=0070 acc=10          z=0 n=0 irq=0 | data address <- 32
+000593 | mem   | pc=0070 acc=10          z=0 n=0 irq=0 | mem[32] <- acc
+000594 | fetch | pc=0071 acc=10          z=0 n=0 irq=0 | 0070: jmp 58
+000595 | exec  | pc=0058 acc=10          z=0 n=0 irq=0 | pc <- 58
+000596 | fetch | pc=0059 acc=10          z=0 n=0 irq=0 | 0058: ld 32
+000597 | addr  | pc=0059 acc=10          z=0 n=0 irq=0 | data address <- 32
+000598 | mem   | pc=0059 acc=10          z=0 n=0 irq=0 | acc <- mem[32]
+000599 | fetch | pc=0060 acc=10          z=0 n=0 irq=0 | 0059: jz 71
+000600 | exec  | pc=0060 acc=10          z=0 n=0 irq=0 | jz skip
+000601 | fetch | pc=0061 acc=10          z=0 n=0 irq=0 | 0060: ld 31
+000602 | addr  | pc=0061 acc=10          z=0 n=0 irq=0 | data address <- 31
+000603 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000604 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000605 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000606 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000607 | alu   | pc=0062 acc=0           z=1 n=0 irq=0 | acc /= mem[32]
+000608 | fetch | pc=0063 acc=0           z=1 n=0 irq=0 | 0062: add 3
+000609 | mem   | pc=0063 acc=0           z=1 n=0 irq=0 | operand <- mem[3]
+000610 | exec  | pc=0063 acc=48          z=0 n=0 irq=0 | acc += mem[3]
+000611 | fetch | pc=0064 acc=48          z=0 n=0 irq=0 | 0063: st 65281
+000612 | addr  | pc=0064 acc=48          z=0 n=0 irq=0 | data address <- 65281
+000613 | mem   | pc=0064 acc=48          z=0 n=0 irq=0 | mem[65281] <- acc
+000614 | fetch | pc=0065 acc=48          z=0 n=0 irq=0 | 0064: ld 31
+000615 | addr  | pc=0065 acc=48          z=0 n=0 irq=0 | data address <- 31
+000616 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000617 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000618 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000619 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000620 | alu   | pc=0066 acc=1           z=0 n=0 irq=0 | acc %= mem[32]
+000621 | fetch | pc=0067 acc=1           z=0 n=0 irq=0 | 0066: st 31
+000622 | addr  | pc=0067 acc=1           z=0 n=0 irq=0 | data address <- 31
+000623 | mem   | pc=0067 acc=1           z=0 n=0 irq=0 | mem[31] <- acc
+000624 | fetch | pc=0068 acc=1           z=0 n=0 irq=0 | 0067: ld 32
+000625 | addr  | pc=0068 acc=1           z=0 n=0 irq=0 | data address <- 32
+000626 | mem   | pc=0068 acc=10          z=0 n=0 irq=0 | acc <- mem[32]
+000627 | fetch | pc=0069 acc=10          z=0 n=0 irq=0 | 0068: div 1
+000628 | mem   | pc=0069 acc=10          z=0 n=0 irq=0 | operand <- mem[1]
+000629 | exec  | pc=0069 acc=10          z=0 n=0 irq=0 | div operands ready
+000630 | alu   | pc=0069 acc=1           z=0 n=0 irq=0 | acc /= mem[1]
+000631 | fetch | pc=0070 acc=1           z=0 n=0 irq=0 | 0069: st 32
+000632 | addr  | pc=0070 acc=1           z=0 n=0 irq=0 | data address <- 32
+000633 | mem   | pc=0070 acc=1           z=0 n=0 irq=0 | mem[32] <- acc
+000634 | fetch | pc=0071 acc=1           z=0 n=0 irq=0 | 0070: jmp 58
+000635 | exec  | pc=0058 acc=1           z=0 n=0 irq=0 | pc <- 58
+000636 | fetch | pc=0059 acc=1           z=0 n=0 irq=0 | 0058: ld 32
+000637 | addr  | pc=0059 acc=1           z=0 n=0 irq=0 | data address <- 32
+000638 | mem   | pc=0059 acc=1           z=0 n=0 irq=0 | acc <- mem[32]
+000639 | fetch | pc=0060 acc=1           z=0 n=0 irq=0 | 0059: jz 71
+000640 | exec  | pc=0060 acc=1           z=0 n=0 irq=0 | jz skip
+000641 | fetch | pc=0061 acc=1           z=0 n=0 irq=0 | 0060: ld 31
+000642 | addr  | pc=0061 acc=1           z=0 n=0 irq=0 | data address <- 31
+000643 | mem   | pc=0061 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000644 | fetch | pc=0062 acc=1           z=0 n=0 irq=0 | 0061: div 32
+000645 | mem   | pc=0062 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000646 | exec  | pc=0062 acc=1           z=0 n=0 irq=0 | div operands ready
+000647 | alu   | pc=0062 acc=1           z=0 n=0 irq=0 | acc /= mem[32]
+000648 | fetch | pc=0063 acc=1           z=0 n=0 irq=0 | 0062: add 3
+000649 | mem   | pc=0063 acc=1           z=0 n=0 irq=0 | operand <- mem[3]
+000650 | exec  | pc=0063 acc=49          z=0 n=0 irq=0 | acc += mem[3]
+000651 | fetch | pc=0064 acc=49          z=0 n=0 irq=0 | 0063: st 65281
+000652 | addr  | pc=0064 acc=49          z=0 n=0 irq=0 | data address <- 65281
+000653 | mem   | pc=0064 acc=49          z=0 n=0 irq=0 | mem[65281] <- acc
+000654 | fetch | pc=0065 acc=49          z=0 n=0 irq=0 | 0064: ld 31
+000655 | addr  | pc=0065 acc=49          z=0 n=0 irq=0 | data address <- 31
+000656 | mem   | pc=0065 acc=1           z=0 n=0 irq=0 | acc <- mem[31]
+000657 | fetch | pc=0066 acc=1           z=0 n=0 irq=0 | 0065: mod 32
+000658 | mem   | pc=0066 acc=1           z=0 n=0 irq=0 | operand <- mem[32]
+000659 | exec  | pc=0066 acc=1           z=0 n=0 irq=0 | mod operands ready
+000660 | alu   | pc=0066 acc=0           z=1 n=0 irq=0 | acc %= mem[32]
+000661 | fetch | pc=0067 acc=0           z=1 n=0 irq=0 | 0066: st 31
+000662 | addr  | pc=0067 acc=0           z=1 n=0 irq=0 | data address <- 31
+000663 | mem   | pc=0067 acc=0           z=1 n=0 irq=0 | mem[31] <- acc
+000664 | fetch | pc=0068 acc=0           z=1 n=0 irq=0 | 0067: ld 32
+000665 | addr  | pc=0068 acc=0           z=1 n=0 irq=0 | data address <- 32
+000666 | mem   | pc=0068 acc=1           z=0 n=0 irq=0 | acc <- mem[32]
+000667 | fetch | pc=0069 acc=1           z=0 n=0 irq=0 | 0068: div 1
+000668 | mem   | pc=0069 acc=1           z=0 n=0 irq=0 | operand <- mem[1]
+000669 | exec  | pc=0069 acc=1           z=0 n=0 irq=0 | div operands ready
+000670 | alu   | pc=0069 acc=0           z=1 n=0 irq=0 | acc /= mem[1]
+000671 | fetch | pc=0070 acc=0           z=1 n=0 irq=0 | 0069: st 32
+000672 | addr  | pc=0070 acc=0           z=1 n=0 irq=0 | data address <- 32
+000673 | mem   | pc=0070 acc=0           z=1 n=0 irq=0 | mem[32] <- acc
+000674 | fetch | pc=0071 acc=0           z=1 n=0 irq=0 | 0070: jmp 58
+000675 | exec  | pc=0058 acc=0           z=1 n=0 irq=0 | pc <- 58
+000676 | fetch | pc=0059 acc=0           z=1 n=0 irq=0 | 0058: ld 32
+000677 | addr  | pc=0059 acc=0           z=1 n=0 irq=0 | data address <- 32
+000678 | mem   | pc=0059 acc=0           z=1 n=0 irq=0 | acc <- mem[32]
+000679 | fetch | pc=0060 acc=0           z=1 n=0 irq=0 | 0059: jz 71
+000680 | exec  | pc=0071 acc=0           z=1 n=0 irq=0 | jz taken
+000681 | fetch | pc=0072 acc=0           z=1 n=0 irq=0 | 0071: ret 0
+000682 | exec  | pc=0017 acc=0           z=1 n=0 irq=0 | ret
+000683 | fetch | pc=0018 acc=0           z=1 n=0 irq=0 | 0017: ld 2
+000684 | addr  | pc=0018 acc=0           z=1 n=0 irq=0 | data address <- 2
+000685 | mem   | pc=0018 acc=10          z=0 n=0 irq=0 | acc <- mem[2]
+000686 | fetch | pc=0019 acc=10          z=0 n=0 irq=0 | 0018: st 65281
+000687 | addr  | pc=0019 acc=10          z=0 n=0 irq=0 | data address <- 65281
+000688 | mem   | pc=0019 acc=10          z=0 n=0 irq=0 | mem[65281] <- acc
+000689 | fetch | pc=0020 acc=10          z=0 n=0 irq=0 | 0019: halt 0
+000690 | exec  | pc=0020 acc=10          z=0 n=0 irq=0 | halt
+ticks=690

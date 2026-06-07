@@ -1,0 +1,111 @@
+output: |-
+  cat
+listing: |
+  0000 - 1D000000 - ei
+  0001 - 03000002 - ld done
+  0002 - 12000001 - jz wait_input
+  0003 - 01000000 - halt
+  0004 - 0300FF00 - ld %in
+  0005 - 04000003 - st char
+  0006 - 0F000001 - cmp newline
+  0007 - 1200000B - jz input_done
+  0008 - 03000003 - ld char
+  0009 - 0400FF01 - st %out
+  0010 - 1C000000 - iret
+  0011 - 03000000 - ld one
+  0012 - 04000002 - st done
+  0013 - 1C000000 - iret
+machine_code: !!binary |
+  Q1NBNAAAAAAAAAAEAAAADgAAAAQdAAAAAwAAAhIAAAEBAAAAAwD/AAQAAAMPAAABEgAACwMAAAME
+  AP8BHAAAAAMAAAAEAAACHAAAAAAAAAEAAAAKAAAAAAAAAAA=
+trace: |
+  000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: ei 0
+  000002 | exec  | pc=0001 acc=0           z=0 n=0 irq=0 | interrupts enabled
+  000003 | irq   | pc=0004 acc=0           z=0 n=0 irq=1 | enter interrupt -> 4
+  000004 | fetch | pc=0005 acc=0           z=0 n=0 irq=1 | 0004: ld 65280
+  000005 | addr  | pc=0005 acc=0           z=0 n=0 irq=1 | data address <- 65280
+  000006 | mem   | pc=0005 acc=99          z=0 n=0 irq=1 | acc <- mem[65280]
+  000007 | fetch | pc=0006 acc=99          z=0 n=0 irq=1 | 0005: st 3
+  000008 | addr  | pc=0006 acc=99          z=0 n=0 irq=1 | data address <- 3
+  000009 | mem   | pc=0006 acc=99          z=0 n=0 irq=1 | mem[3] <- acc
+  000010 | fetch | pc=0007 acc=99          z=0 n=0 irq=1 | 0006: cmp 1
+  000011 | mem   | pc=0007 acc=99          z=0 n=0 irq=1 | operand <- mem[1]
+  000012 | exec  | pc=0007 acc=99          z=0 n=0 irq=1 | cmp acc, mem[1]
+  000013 | fetch | pc=0008 acc=99          z=0 n=0 irq=1 | 0007: jz 11
+  000014 | exec  | pc=0008 acc=99          z=0 n=0 irq=1 | jz skip
+  000015 | fetch | pc=0009 acc=99          z=0 n=0 irq=1 | 0008: ld 3
+  000016 | addr  | pc=0009 acc=99          z=0 n=0 irq=1 | data address <- 3
+  000017 | mem   | pc=0009 acc=99          z=0 n=0 irq=1 | acc <- mem[3]
+  000018 | fetch | pc=0010 acc=99          z=0 n=0 irq=1 | 0009: st 65281
+  000019 | addr  | pc=0010 acc=99          z=0 n=0 irq=1 | data address <- 65281
+  000020 | mem   | pc=0010 acc=99          z=0 n=0 irq=1 | mem[65281] <- acc
+  000021 | fetch | pc=0011 acc=99          z=0 n=0 irq=1 | 0010: iret 0
+  000022 | exec  | pc=0001 acc=99          z=0 n=0 irq=0 | iret
+  000023 | irq   | pc=0004 acc=99          z=0 n=0 irq=1 | enter interrupt -> 4
+  000024 | fetch | pc=0005 acc=99          z=0 n=0 irq=1 | 0004: ld 65280
+  000025 | addr  | pc=0005 acc=99          z=0 n=0 irq=1 | data address <- 65280
+  000026 | mem   | pc=0005 acc=97          z=0 n=0 irq=1 | acc <- mem[65280]
+  000027 | fetch | pc=0006 acc=97          z=0 n=0 irq=1 | 0005: st 3
+  000028 | addr  | pc=0006 acc=97          z=0 n=0 irq=1 | data address <- 3
+  000029 | mem   | pc=0006 acc=97          z=0 n=0 irq=1 | mem[3] <- acc
+  000030 | fetch | pc=0007 acc=97          z=0 n=0 irq=1 | 0006: cmp 1
+  000031 | mem   | pc=0007 acc=97          z=0 n=0 irq=1 | operand <- mem[1]
+  000032 | exec  | pc=0007 acc=97          z=0 n=0 irq=1 | cmp acc, mem[1]
+  000033 | fetch | pc=0008 acc=97          z=0 n=0 irq=1 | 0007: jz 11
+  000034 | exec  | pc=0008 acc=97          z=0 n=0 irq=1 | jz skip
+  000035 | fetch | pc=0009 acc=97          z=0 n=0 irq=1 | 0008: ld 3
+  000036 | addr  | pc=0009 acc=97          z=0 n=0 irq=1 | data address <- 3
+  000037 | mem   | pc=0009 acc=97          z=0 n=0 irq=1 | acc <- mem[3]
+  000038 | fetch | pc=0010 acc=97          z=0 n=0 irq=1 | 0009: st 65281
+  000039 | addr  | pc=0010 acc=97          z=0 n=0 irq=1 | data address <- 65281
+  000040 | mem   | pc=0010 acc=97          z=0 n=0 irq=1 | mem[65281] <- acc
+  000041 | fetch | pc=0011 acc=97          z=0 n=0 irq=1 | 0010: iret 0
+  000042 | exec  | pc=0001 acc=97          z=0 n=0 irq=0 | iret
+  000043 | irq   | pc=0004 acc=97          z=0 n=0 irq=1 | enter interrupt -> 4
+  000044 | fetch | pc=0005 acc=97          z=0 n=0 irq=1 | 0004: ld 65280
+  000045 | addr  | pc=0005 acc=97          z=0 n=0 irq=1 | data address <- 65280
+  000046 | mem   | pc=0005 acc=116         z=0 n=0 irq=1 | acc <- mem[65280]
+  000047 | fetch | pc=0006 acc=116         z=0 n=0 irq=1 | 0005: st 3
+  000048 | addr  | pc=0006 acc=116         z=0 n=0 irq=1 | data address <- 3
+  000049 | mem   | pc=0006 acc=116         z=0 n=0 irq=1 | mem[3] <- acc
+  000050 | fetch | pc=0007 acc=116         z=0 n=0 irq=1 | 0006: cmp 1
+  000051 | mem   | pc=0007 acc=116         z=0 n=0 irq=1 | operand <- mem[1]
+  000052 | exec  | pc=0007 acc=116         z=0 n=0 irq=1 | cmp acc, mem[1]
+  000053 | fetch | pc=0008 acc=116         z=0 n=0 irq=1 | 0007: jz 11
+  000054 | exec  | pc=0008 acc=116         z=0 n=0 irq=1 | jz skip
+  000055 | fetch | pc=0009 acc=116         z=0 n=0 irq=1 | 0008: ld 3
+  000056 | addr  | pc=0009 acc=116         z=0 n=0 irq=1 | data address <- 3
+  000057 | mem   | pc=0009 acc=116         z=0 n=0 irq=1 | acc <- mem[3]
+  000058 | fetch | pc=0010 acc=116         z=0 n=0 irq=1 | 0009: st 65281
+  000059 | addr  | pc=0010 acc=116         z=0 n=0 irq=1 | data address <- 65281
+  000060 | mem   | pc=0010 acc=116         z=0 n=0 irq=1 | mem[65281] <- acc
+  000061 | fetch | pc=0011 acc=116         z=0 n=0 irq=1 | 0010: iret 0
+  000062 | exec  | pc=0001 acc=116         z=0 n=0 irq=0 | iret
+  000063 | irq   | pc=0004 acc=116         z=0 n=0 irq=1 | enter interrupt -> 4
+  000064 | fetch | pc=0005 acc=116         z=0 n=0 irq=1 | 0004: ld 65280
+  000065 | addr  | pc=0005 acc=116         z=0 n=0 irq=1 | data address <- 65280
+  000066 | mem   | pc=0005 acc=10          z=0 n=0 irq=1 | acc <- mem[65280]
+  000067 | fetch | pc=0006 acc=10          z=0 n=0 irq=1 | 0005: st 3
+  000068 | addr  | pc=0006 acc=10          z=0 n=0 irq=1 | data address <- 3
+  000069 | mem   | pc=0006 acc=10          z=0 n=0 irq=1 | mem[3] <- acc
+  000070 | fetch | pc=0007 acc=10          z=0 n=0 irq=1 | 0006: cmp 1
+  000071 | mem   | pc=0007 acc=10          z=0 n=0 irq=1 | operand <- mem[1]
+  000072 | exec  | pc=0007 acc=10          z=1 n=0 irq=1 | cmp acc, mem[1]
+  000073 | fetch | pc=0008 acc=10          z=1 n=0 irq=1 | 0007: jz 11
+  000074 | exec  | pc=0011 acc=10          z=1 n=0 irq=1 | jz taken
+  000075 | fetch | pc=0012 acc=10          z=1 n=0 irq=1 | 0011: ld 0
+  000076 | addr  | pc=0012 acc=10          z=1 n=0 irq=1 | data address <- 0
+  000077 | mem   | pc=0012 acc=1           z=0 n=0 irq=1 | acc <- mem[0]
+  000078 | fetch | pc=0013 acc=1           z=0 n=0 irq=1 | 0012: st 2
+  000079 | addr  | pc=0013 acc=1           z=0 n=0 irq=1 | data address <- 2
+  000080 | mem   | pc=0013 acc=1           z=0 n=0 irq=1 | mem[2] <- acc
+  000081 | fetch | pc=0014 acc=1           z=0 n=0 irq=1 | 0013: iret 0
+  000082 | exec  | pc=0001 acc=1           z=0 n=0 irq=0 | iret
+  000083 | fetch | pc=0002 acc=1           z=0 n=0 irq=0 | 0001: ld 2
+  000084 | addr  | pc=0002 acc=1           z=0 n=0 irq=0 | data address <- 2
+  000085 | mem   | pc=0002 acc=1           z=0 n=0 irq=0 | acc <- mem[2]
+  000086 | fetch | pc=0003 acc=1           z=0 n=0 irq=0 | 0002: jz 1
+  000087 | exec  | pc=0003 acc=1           z=0 n=0 irq=0 | jz skip
+  000088 | fetch | pc=0004 acc=1           z=0 n=0 irq=0 | 0003: halt 0
+  000089 | exec  | pc=0004 acc=1           z=0 n=0 irq=0 | halt
+  ticks=89

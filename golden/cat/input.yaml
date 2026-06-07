@@ -1,0 +1,8 @@
+- tick: 1
+  value: "c"
+- tick: 20
+  value: "a"
+- tick: 40
+  value: "t"
+- tick: 60
+  value: "\n"

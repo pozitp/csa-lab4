@@ -1,0 +1,4 @@
+source: "vector_scalar.asm"
+trace_limit: 1752
+max_ticks: 100000
+ticks: 1752

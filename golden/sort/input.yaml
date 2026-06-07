@@ -1,0 +1,8 @@
+- tick: 1
+  value: "3"
+- tick: 20
+  value: "1"
+- tick: 40
+  value: "4"
+- tick: 60
+  value: "\n"
