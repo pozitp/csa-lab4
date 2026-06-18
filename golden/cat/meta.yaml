@@ -1,4 +1,0 @@
-source: "cat.asm"
-trace_limit: 89
-max_ticks: 100000
-ticks: 89

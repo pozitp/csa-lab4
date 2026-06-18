@@ -1,6 +1,49 @@
-output: |
-  Hello, world!
-listing: |
+in_source: |
+  .data
+  one: .word 1
+  pstr_ptr: .word 0
+  pstr_len: .word 0
+  msg: .pstr "Hello, world!\n"
+  
+  .text
+  .entry main
+  main:
+      lea msg
+      call print_pstr
+      halt
+  
+  print_pstr:
+      st pstr_ptr
+      ldx pstr_ptr
+      st pstr_len
+      ld pstr_ptr
+      add one
+      st pstr_ptr
+  print_pstr_loop:
+      ld pstr_len
+      jz print_pstr_done
+      ldx pstr_ptr
+      st %out
+      ld pstr_ptr
+      add one
+      st pstr_ptr
+      ld pstr_len
+      sub one
+      st pstr_len
+      jmp print_pstr_loop
+  print_pstr_done:
+      ret
+  
+in_stdin: |
+  []
+in_trace_limit: 480
+in_max_ticks: 100000
+out_code: !!binary |
+  Q1NBNAAAAAD/////AAAAFQAAABIfAAADGgAAAwEAAAAEAAABIAAAAQQAAAIDAAABBQAAAAQAAAED
+  AAACEgAAFCAAAAEEAP8BAwAAAQUAAAAEAAABAwAAAgYAAAAEAAACEQAACRsAAAAAAAABAAAAAAAA
+  AAAAAAAOAAAASAAAAGUAAABsAAAAbAAAAG8AAAAsAAAAIAAAAHcAAABvAAAAcgAAAGwAAABkAAAA
+  IQAAAAo=
+out_code_hex: |
   0000 - 1F000003 - lea msg
   0001 - 1A000003 - call print_pstr
   0002 - 01000000 - halt
@@ -22,12 +65,11 @@ listing: |
   0018 - 04000002 - st pstr_len
   0019 - 11000009 - jmp print_pstr_loop
   0020 - 1B000000 - ret
-machine_code: !!binary |
-  Q1NBNAAAAAD/////AAAAFQAAABIfAAADGgAAAwEAAAAEAAABIAAAAQQAAAIDAAABBQAAAAQAAAED
-  AAACEgAAFCAAAAEEAP8BAwAAAQUAAAAEAAABAwAAAgYAAAAEAAACEQAACRsAAAAAAAABAAAAAAAA
-  AAAAAAAOAAAASAAAAGUAAABsAAAAbAAAAG8AAAAsAAAAIAAAAHcAAABvAAAAcgAAAGwAAABkAAAA
-  IQAAAAo=
-trace: |
+out_stdout: |
+  Hello, world!
+  
+  ticks: 480
+out_log: |
   000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: lea 3
   000002 | exec  | pc=0001 acc=3           z=0 n=0 irq=0 | acc <- address 3
   000003 | fetch | pc=0002 acc=3           z=0 n=0 irq=0 | 0001: call 3

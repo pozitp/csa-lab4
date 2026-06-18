@@ -45,7 +45,11 @@ python test_golden.py
 
 ```bash
 python translator.py programs/prob1.asm prob1.bin --lst prob1.lst
-python machine.py prob1.bin golden/prob1/input.yaml --trace prob1.trace --max-ticks 20000000
+cat > prob1.input.yaml <<'YAML'
+- tick: 1
+  value: "3"
+YAML
+python machine.py prob1.bin prob1.input.yaml --trace prob1.trace --max-ticks 20000000
 ```
 
 Ожидаемый вывод:
@@ -347,7 +351,7 @@ Trace содержит tick, стадию, `PC`, `ACC`, флаги и призн
 000002 | exec  | pc=0001 acc=3 z=0 n=0 irq=0 | acc <- address 3
 ```
 
-`ticks` в `meta.yaml` - это ожидаемое число тактов до остановки программы. Оно ничего не запускает само: тест исполняет `machine.py`, получает фактический счётчик тактов и сверяет его с этим полем. `max_ticks` - защитный лимит от бесконечного выполнения.
+`ticks` в `out_stdout` - это ожидаемое число тактов до остановки программы. Оно ничего не запускает само: тест исполняет `machine.py`, получает фактический счётчик тактов и сверяет его с этим полем. `in_max_ticks` - защитный лимит от бесконечного выполнения.
 
 Hardwired control unit реализован в `Machine.execute()`: opcode напрямую выбирает действия над регистрами, памятью, стеком и флагами. Большая цепочка `if/elif` здесь уместна, потому что она соответствует hardwired dispatch по opcode.
 
@@ -479,34 +483,34 @@ n = n / 10
 Golden tests проверяют всю инструментальную цепочку:
 
 ```text
-source.asm -> translator.py -> program.bin/program.lst -> machine.py -> output/trace
+golden/<case>.yml -> translator.py -> program.bin/program.lst -> machine.py -> output/trace
 ```
 
 Структура одного golden case:
 
 ```text
-source.asm   исходник
-program.bin  бинарный машинный код
-program.lst  листинг адрес/hex/mnemonic
-input.yaml   расписание ввода
-output.txt   ожидаемый вывод
-output.yaml  ожидаемый вывод, listing, machine_code и trace в YAML-формате
-trace.txt    журнал модели
-meta.yaml    лимиты и ожидаемое число тактов
+in_source       исходник
+in_stdin        расписание ввода
+in_trace_limit  лимит строк trace
+in_max_ticks    защитный лимит тактов
+out_code        бинарный машинный код
+out_code_hex    листинг адрес/hex/mnemonic
+out_stdout      ожидаемый вывод и ticks
+out_log         журнал модели
 ```
 
 Тесты:
 
 | Case | Что проверяет | Golden |
 | --- | --- | --- |
-| `hello` | Pascal string и вывод `Hello, world!` | [golden/hello](golden/hello) |
-| `cat` | trap input и MMIO output | [golden/cat](golden/cat) |
-| `hello_user_name` | interrupt handler + строковый буфер | [golden/hello_user_name](golden/hello_user_name) |
-| `sort` | ввод списка и сортировка | [golden/sort](golden/sort) |
-| `double_precision` | 64-битная арифметика на 32-битном слове | [golden/double_precision](golden/double_precision) |
-| `prob1` | алгоритм варианта, Euler Problem 4 | [golden/prob1](golden/prob1) |
-| `vector` | векторные инструкции | [golden/vector](golden/vector) |
-| `vector_scalar` | скалярный baseline для сравнения | [golden/vector_scalar](golden/vector_scalar) |
+| `hello` | Pascal string и вывод `Hello, world!` | [golden/hello.yml](golden/hello.yml) |
+| `cat` | trap input и MMIO output | [golden/cat.yml](golden/cat.yml) |
+| `hello_user_name` | interrupt handler + строковый буфер | [golden/hello_user_name.yml](golden/hello_user_name.yml) |
+| `sort` | ввод списка и сортировка | [golden/sort.yml](golden/sort.yml) |
+| `double_precision` | 64-битная арифметика на 32-битном слове | [golden/double_precision.yml](golden/double_precision.yml) |
+| `prob1` | алгоритм варианта, Euler Problem 4 | [golden/prob1.yml](golden/prob1.yml) |
+| `vector` | векторные инструкции | [golden/vector.yml](golden/vector.yml) |
+| `vector_scalar` | скалярный baseline для сравнения | [golden/vector_scalar.yml](golden/vector_scalar.yml) |
 
 Команда проверки:
 

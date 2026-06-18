@@ -1,4 +1,0 @@
-source: "double_precision.asm"
-trace_limit: 690
-max_ticks: 100000
-ticks: 690

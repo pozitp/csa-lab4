@@ -13,36 +13,22 @@ ROOT = Path(__file__).resolve().parent
 GOLDEN = ROOT / "golden"
 
 
-def read_meta(path: Path) -> dict[str, int | str]:
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
+def read_golden(path: Path) -> dict[str, object]:
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"bad golden YAML: {path}")
+    return data
 
 
-def read_output_yaml(path: Path) -> str:
-    output = yaml.safe_load(path.read_text(encoding="utf-8")).get("output")
-    if not isinstance(output, str):
-        raise ValueError(f"bad output YAML: {path}")
-    return output
+def get_field(case: dict[str, object], path: Path, key: str, expected_type: type) -> object:
+    value = case.get(key)
+    if not isinstance(value, expected_type):
+        raise ValueError(f"bad {key} in {path}")
+    return value
 
 
-def read_trace_yaml(path: Path) -> str:
-    trace = yaml.safe_load(path.read_text(encoding="utf-8")).get("trace")
-    if not isinstance(trace, str):
-        raise ValueError(f"bad trace YAML: {path}")
-    return trace
-
-
-def read_listing_yaml(path: Path) -> str:
-    listing = yaml.safe_load(path.read_text(encoding="utf-8")).get("listing")
-    if not isinstance(listing, str):
-        raise ValueError(f"bad listing YAML: {path}")
-    return listing
-
-
-def read_machine_code_yaml(path: Path) -> bytes:
-    machine_code = yaml.safe_load(path.read_text(encoding="utf-8")).get("machine_code")
-    if not isinstance(machine_code, bytes):
-        raise ValueError(f"bad machine code YAML: {path}")
-    return machine_code
+def format_stdout(output: str, ticks: int) -> str:
+    return f"{output}\nticks: {ticks}\n"
 
 
 class GoldenTest(unittest.TestCase):
@@ -109,9 +95,11 @@ main:
 
     def test_golden_cases(self) -> None:
         self.assertTrue(GOLDEN.exists(), "golden directory is missing")
-        for case_dir in sorted(path for path in GOLDEN.iterdir() if path.is_dir()):
-            with self.subTest(case=case_dir.name):
-                self.check_case(case_dir)
+        case_paths = sorted(GOLDEN.glob("*.yml"))
+        self.assertTrue(case_paths, "golden/*.yml files are missing")
+        for case_path in case_paths:
+            with self.subTest(case=case_path.name):
+                self.check_case(case_path)
 
     def run_source_ticks(self, source: str) -> int:
         image = translate(source)
@@ -121,38 +109,34 @@ main:
             _, _, ticks = run_program(image_path)
         return ticks
 
-    def check_case(self, case_dir: Path) -> None:
-        source = (case_dir / "source.asm").read_text(encoding="utf-8")
-        expected_listing = (case_dir / "program.lst").read_text(encoding="utf-8")
-        expected_binary = (case_dir / "program.bin").read_bytes()
-        expected_output = (case_dir / "output.txt").read_text(encoding="utf-8")
-        expected_output_yaml = read_output_yaml(case_dir / "output.yaml")
-        expected_listing_yaml = read_listing_yaml(case_dir / "output.yaml")
-        expected_trace = (case_dir / "trace.txt").read_text(encoding="utf-8")
-        expected_trace_yaml = read_trace_yaml(case_dir / "output.yaml")
-        expected_binary_yaml = read_machine_code_yaml(case_dir / "output.yaml")
-        meta = read_meta(case_dir / "meta.yaml")
+    def check_case(self, case_path: Path) -> None:
+        case = read_golden(case_path)
+        source = get_field(case, case_path, "in_source", str)
+        input_schedule = get_field(case, case_path, "in_stdin", str)
+        expected_binary = get_field(case, case_path, "out_code", bytes)
+        expected_listing = get_field(case, case_path, "out_code_hex", str)
+        expected_stdout = get_field(case, case_path, "out_stdout", str)
+        expected_trace = get_field(case, case_path, "out_log", str)
+        trace_limit = int(case.get("in_trace_limit", 2000))
+        max_ticks = int(case.get("in_max_ticks", 1_000_000))
 
         image = translate(source)
         self.assertEqual(expected_listing, image.listing)
-        self.assertEqual(expected_listing, expected_listing_yaml)
 
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / "program.bin"
+            input_path = Path(tmp) / "input.yaml"
+            input_path.write_text(input_schedule, encoding="utf-8")
             write_image(image, image_path)
             self.assertEqual(expected_binary, image_path.read_bytes())
             output, trace, ticks = run_program(
                 image_path,
-                case_dir / "input.yaml",
-                trace_limit=meta["trace_limit"],
-                max_ticks=meta["max_ticks"],
+                input_path,
+                trace_limit=trace_limit,
+                max_ticks=max_ticks,
             )
 
-        self.assertEqual(meta["ticks"], ticks)
-        self.assertEqual(expected_output, expected_output_yaml)
-        self.assertEqual(expected_output, output)
-        self.assertEqual(expected_trace, expected_trace_yaml)
-        self.assertEqual(expected_binary, expected_binary_yaml)
+        self.assertEqual(expected_stdout, format_stdout(output, ticks))
         self.assertEqual(expected_trace, trace + f"ticks={ticks}\n")
 
 

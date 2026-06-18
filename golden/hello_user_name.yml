@@ -1,7 +1,106 @@
-output: |
-  What is your name?
-  Hello, Alice!
-listing: |
+in_source: |
+  .data
+  one: .word 1
+  newline: .word 10
+  ascii_bang: .word 33
+  done: .word 0
+  char: .word 0
+  name: .word 0
+  name_chars: .zero 32
+  name_ptr: .word name_chars
+  pstr_ptr: .word 0
+  pstr_len: .word 0
+  prompt: .pstr "What is your name?\n"
+  hello: .pstr "Hello, "
+  
+  .text
+  .entry main
+  .interrupt input_irq
+  main:
+      lea prompt
+      call print_pstr
+      ei
+  wait_name:
+      ld done
+      jz wait_name
+      di
+      lea hello
+      call print_pstr
+      lea name
+      call print_pstr
+      ld ascii_bang
+      st %out
+      ld newline
+      st %out
+      halt
+  
+  input_irq:
+      ld %in
+      st char
+      cmp newline
+      jz input_done
+      ld char
+      stx name_ptr
+      ld name_ptr
+      add one
+      st name_ptr
+      ld name
+      add one
+      st name
+      iret
+  input_done:
+      ld one
+      st done
+      iret
+  
+  print_pstr:
+      st pstr_ptr
+      ldx pstr_ptr
+      st pstr_len
+      ld pstr_ptr
+      add one
+      st pstr_ptr
+  print_pstr_loop:
+      ld pstr_len
+      jz print_pstr_done
+      ldx pstr_ptr
+      st %out
+      ld pstr_ptr
+      add one
+      st pstr_ptr
+      ld pstr_len
+      sub one
+      st pstr_len
+      jmp print_pstr_loop
+  print_pstr_done:
+      ret
+  
+in_stdin: |
+  - tick: 1
+    value: "A"
+  - tick: 20
+    value: "l"
+  - tick: 40
+    value: "i"
+  - tick: 60
+    value: "c"
+  - tick: 80
+    value: "e"
+  - tick: 100
+    value: "\n"
+in_trace_limit: 1320
+in_max_ticks: 100000
+out_code: !!binary |
+  Q1NBNAAAAAAAAAAPAAAAMQAAAEUfAAApGgAAHx0AAAADAAADEgAAAx4AAAAfAAA9GgAAHx8AAAUa
+  AAAfAwAAAgQA/wEDAAABBAD/AQEAAAADAP8ABAAABA8AAAESAAAcAwAABCEAACYDAAAmBQAAAAQA
+  ACYDAAAFBQAAAAQAAAUcAAAAAwAAAAQAAAMcAAAABAAAJyAAACcEAAAoAwAAJwUAAAAEAAAnAwAA
+  KBIAADAgAAAnBAD/AQMAACcFAAAABAAAJwMAACgGAAAABAAAKBEAACUbAAAAAAAAAQAAAAoAAAAh
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAATAAAAVwAAAGgAAABhAAAA
+  dAAAACAAAABpAAAAcwAAACAAAAB5AAAAbwAAAHUAAAByAAAAIAAAAG4AAABhAAAAbQAAAGUAAAA/
+  AAAACgAAAAcAAABIAAAAZQAAAGwAAABsAAAAbwAAACwAAAAg
+out_code_hex: |
   0000 - 1F000029 - lea prompt
   0001 - 1A00001F - call print_pstr
   0002 - 1D000000 - ei
@@ -51,17 +150,12 @@ listing: |
   0046 - 04000028 - st pstr_len
   0047 - 11000025 - jmp print_pstr_loop
   0048 - 1B000000 - ret
-machine_code: !!binary |
-  Q1NBNAAAAAAAAAAPAAAAMQAAAEUfAAApGgAAHx0AAAADAAADEgAAAx4AAAAfAAA9GgAAHx8AAAUa
-  AAAfAwAAAgQA/wEDAAABBAD/AQEAAAADAP8ABAAABA8AAAESAAAcAwAABCEAACYDAAAmBQAAAAQA
-  ACYDAAAFBQAAAAQAAAUcAAAAAwAAAAQAAAMcAAAABAAAJyAAACcEAAAoAwAAJwUAAAAEAAAnAwAA
-  KBIAADAgAAAnBAD/AQMAACcFAAAABAAAJwMAACgGAAAABAAAKBEAACUbAAAAAAAAAQAAAAoAAAAh
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAATAAAAVwAAAGgAAABhAAAA
-  dAAAACAAAABpAAAAcwAAACAAAAB5AAAAbwAAAHUAAAByAAAAIAAAAG4AAABhAAAAbQAAAGUAAAA/
-  AAAACgAAAAcAAABIAAAAZQAAAGwAAABsAAAAbwAAACwAAAAg
-trace: |
+out_stdout: |
+  What is your name?
+  Hello, Alice!
+  
+  ticks: 1320
+out_log: |
   000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: lea 41
   000002 | exec  | pc=0001 acc=41          z=0 n=0 irq=0 | acc <- address 41
   000003 | fetch | pc=0002 acc=41          z=0 n=0 irq=0 | 0001: call 31

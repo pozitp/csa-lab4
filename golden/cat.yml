@@ -1,6 +1,48 @@
-output: |-
-  cat
-listing: |
+in_source: |
+  .data
+  one: .word 1
+  newline: .word 10
+  done: .word 0
+  char: .word 0
+  
+  .text
+  .entry main
+  .interrupt input_irq
+  main:
+      ei
+  wait_input:
+      ld done
+      jz wait_input
+      halt
+  
+  input_irq:
+      ld %in
+      st char
+      cmp newline
+      jz input_done
+      ld char
+      st %out
+      iret
+  input_done:
+      ld one
+      st done
+      iret
+  
+in_stdin: |
+  - tick: 1
+    value: "c"
+  - tick: 20
+    value: "a"
+  - tick: 40
+    value: "t"
+  - tick: 60
+    value: "\n"
+in_trace_limit: 89
+in_max_ticks: 100000
+out_code: !!binary |
+  Q1NBNAAAAAAAAAAEAAAADgAAAAQdAAAAAwAAAhIAAAEBAAAAAwD/AAQAAAMPAAABEgAACwMAAAME
+  AP8BHAAAAAMAAAAEAAACHAAAAAAAAAEAAAAKAAAAAAAAAAA=
+out_code_hex: |
   0000 - 1D000000 - ei
   0001 - 03000002 - ld done
   0002 - 12000001 - jz wait_input
@@ -15,10 +57,10 @@ listing: |
   0011 - 03000000 - ld one
   0012 - 04000002 - st done
   0013 - 1C000000 - iret
-machine_code: !!binary |
-  Q1NBNAAAAAAAAAAEAAAADgAAAAQdAAAAAwAAAhIAAAEBAAAAAwD/AAQAAAMPAAABEgAACwMAAAME
-  AP8BHAAAAAMAAAAEAAACHAAAAAAAAAEAAAAKAAAAAAAAAAA=
-trace: |
+out_stdout: |
+  cat
+  ticks: 89
+out_log: |
   000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: ei 0
   000002 | exec  | pc=0001 acc=0           z=0 n=0 irq=0 | interrupts enabled
   000003 | irq   | pc=0004 acc=0           z=0 n=0 irq=1 | enter interrupt -> 4
