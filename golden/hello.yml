@@ -4,14 +4,14 @@ in_source: |
   pstr_ptr: .word 0
   pstr_len: .word 0
   msg: .pstr "Hello, world!\n"
-  
+
   .text
   .entry main
   main:
       lea msg
       call print_pstr
       halt
-  
+
   print_pstr:
       st pstr_ptr
       ldx pstr_ptr
@@ -33,7 +33,7 @@ in_source: |
       jmp print_pstr_loop
   print_pstr_done:
       ret
-  
+
 in_stdin: |
   []
 in_trace_limit: 480
@@ -67,7 +67,7 @@ out_code_hex: |
   0020 - 1B000000 - ret
 out_stdout: |
   Hello, world!
-  
+
   ticks: 480
 out_log: |
   000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: lea 3

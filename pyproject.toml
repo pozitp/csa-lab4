@@ -17,3 +17,8 @@ select = [
 quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:.*non-Collection iterable to parametrize.*:pytest.PytestRemovedIn10Warning"
+]

@@ -180,21 +180,18 @@ class Machine:
         elif op == Op.MUL:
             self.tick("mem", f"operand <- mem[{arg}]")
             value = self.read_mem(arg)
-            self.tick("exec", "mul operands ready")
             self.set_acc(self.acc * value)
-            self.tick("alu", f"acc *= mem[{arg}]")
+            self.tick("exec", f"acc *= mem[{arg}]")
         elif op == Op.DIV:
             self.tick("mem", f"operand <- mem[{arg}]")
             value = self.read_mem(arg)
-            self.tick("exec", "div operands ready")
             self.set_acc(self.div(self.acc, value))
-            self.tick("alu", f"acc /= mem[{arg}]")
+            self.tick("exec", f"acc /= mem[{arg}]")
         elif op == Op.MOD:
             self.tick("mem", f"operand <- mem[{arg}]")
             value = self.read_mem(arg)
-            self.tick("exec", "mod operands ready")
             self.set_acc(self.acc - self.div(self.acc, value) * value)
-            self.tick("alu", f"acc %= mem[{arg}]")
+            self.tick("exec", f"acc %= mem[{arg}]")
         elif op == Op.ADDI:
             self.set_acc(self.acc + signed_arg)
             self.tick("exec", f"acc += {signed_arg}")
@@ -202,17 +199,14 @@ class Machine:
             self.set_acc(self.acc - signed_arg)
             self.tick("exec", f"acc -= {signed_arg}")
         elif op == Op.MULI:
-            self.tick("exec", "mul immediate operands ready")
             self.set_acc(self.acc * signed_arg)
-            self.tick("alu", f"acc *= {signed_arg}")
+            self.tick("exec", f"acc *= {signed_arg}")
         elif op == Op.DIVI:
-            self.tick("exec", "div immediate operands ready")
             self.set_acc(self.div(self.acc, signed_arg))
-            self.tick("alu", f"acc /= {signed_arg}")
+            self.tick("exec", f"acc /= {signed_arg}")
         elif op == Op.MODI:
-            self.tick("exec", "mod immediate operands ready")
             self.set_acc(self.acc - self.div(self.acc, signed_arg) * signed_arg)
-            self.tick("alu", f"acc %= {signed_arg}")
+            self.tick("exec", f"acc %= {signed_arg}")
         elif op == Op.CMP:
             self.tick("mem", f"operand <- mem[{arg}]")
             self.set_flags(self.acc - self.read_mem(arg))

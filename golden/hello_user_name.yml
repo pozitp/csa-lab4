@@ -12,7 +12,7 @@ in_source: |
   pstr_len: .word 0
   prompt: .pstr "What is your name?\n"
   hello: .pstr "Hello, "
-  
+
   .text
   .entry main
   .interrupt input_irq
@@ -33,7 +33,7 @@ in_source: |
       ld newline
       st %out
       halt
-  
+
   input_irq:
       ld %in
       st char
@@ -52,7 +52,7 @@ in_source: |
       ld one
       st done
       iret
-  
+
   print_pstr:
       st pstr_ptr
       ldx pstr_ptr
@@ -74,7 +74,7 @@ in_source: |
       jmp print_pstr_loop
   print_pstr_done:
       ret
-  
+
 in_stdin: |
   - tick: 1
     value: "A"
@@ -153,7 +153,7 @@ out_code_hex: |
 out_stdout: |
   What is your name?
   Hello, Alice!
-  
+
   ticks: 1320
 out_log: |
   000001 | fetch | pc=0001 acc=0           z=0 n=0 irq=0 | 0000: lea 41

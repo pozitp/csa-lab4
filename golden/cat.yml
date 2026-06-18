@@ -4,7 +4,7 @@ in_source: |
   newline: .word 10
   done: .word 0
   char: .word 0
-  
+
   .text
   .entry main
   .interrupt input_irq
@@ -14,7 +14,7 @@ in_source: |
       ld done
       jz wait_input
       halt
-  
+
   input_irq:
       ld %in
       st char
@@ -27,7 +27,7 @@ in_source: |
       ld one
       st done
       iret
-  
+
 in_stdin: |
   - tick: 1
     value: "c"
