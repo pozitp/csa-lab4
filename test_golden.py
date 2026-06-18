@@ -6,8 +6,10 @@ import pytest
 from machine import read_schedule, run_program
 from translator import translate, write_image
 
+
 def format_stdout(output: str, ticks: int) -> str:
     return f"{output}\nticks: {ticks}\n"
+
 
 def test_unsupported_input_schedule_extension_fails() -> None:
     with tempfile.TemporaryDirectory() as tmp:
@@ -16,12 +18,14 @@ def test_unsupported_input_schedule_extension_fails() -> None:
         with pytest.raises(ValueError, match="input schedule must be YAML"):
             read_schedule(input_path)
 
+
 def test_bad_input_schedule_yaml_fails() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         input_path = Path(tmp) / "input.yaml"
         input_path.write_text("tick: 1\nvalue: A\n", encoding="utf-8")
         with pytest.raises(ValueError, match="bad input schedule"):
             read_schedule(input_path)
+
 
 def test_text_section_is_code_segment() -> None:
     source = """
@@ -35,6 +39,7 @@ main:
 """
     assert translate(source).listing == "0000 - 01000000 - halt\n"
 
+
 def run_source_ticks(source: str) -> int:
     image = translate(source)
     with tempfile.TemporaryDirectory() as tmp:
@@ -42,6 +47,7 @@ def run_source_ticks(source: str) -> int:
         write_image(image, image_path)
         _, _, ticks = run_program(image_path)
     return ticks
+
 
 def test_scalar_instruction_timing_is_not_flat() -> None:
     source = """
@@ -61,6 +67,7 @@ main:
 """
     assert run_source_ticks(source) == 16
 
+
 def test_vector_instruction_timing_counts_lane_memory() -> None:
     source = """
 .data
@@ -78,6 +85,7 @@ main:
 """
     assert run_source_ticks(source) == 23
 
+
 @pytest.mark.golden_test("golden/*.yml")
 def test_golden_cases(golden) -> None:
     source = golden["in_source"]
@@ -93,9 +101,9 @@ def test_golden_cases(golden) -> None:
         input_path = Path(tmp) / "input.yaml"
         input_path.write_text(input_schedule, encoding="utf-8")
         write_image(image, image_path)
-        
+
         assert image_path.read_bytes() == golden.out["out_code"]
-        
+
         output, trace, ticks = run_program(
             image_path,
             input_path,
